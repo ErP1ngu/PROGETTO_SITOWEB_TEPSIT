@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Nuovo prodotto' if nuovo else 'Modifica prodotto' }}{% endblock %}
+{% block content %}
+<main class="page narrow">
+    <h1>{{ 'Nuovo prodotto' if nuovo else 'Modifica prodotto' }}</h1>
+    <form method="POST" enctype="multipart/form-data" class="panel"
+          action="{{ url_for('prodotto_nuovo') if nuovo else url_for('prodotto_modifica', pid=p.id) }}">
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" value="{{ p.nome or '' }}" required maxlength="100">
+        </div>
+        <div class="form-group">
+            <label for="descrizione">Descrizione</label>
+            <textarea id="descrizione" name="descrizione" rows="4">{{ p.descrizione or '' }}</textarea>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label for="prezzo">Prezzo (€)</label>
+                <input type="text" id="prezzo" name="prezzo" inputmode="decimal" value="{{ p.prezzo if p.prezzo is not none else '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="quantita">Quantità disponibile</label>
+                <input type="number" id="quantita" name="quantita" min="0" value="{{ p.quantita if p.quantita is not none else 0 }}" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="categoria_id">Categoria</label>
+            <select id="categoria_id" name="categoria_id">
+                <option value="">Nessuna</option>
+                {% for c in categorie %}
+                <option value="{{ c.id }}" {{ 'selected' if p.categoria_id == c.id }}>{{ c.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="immagine">Immagine (PNG, JPG, GIF o WEBP, max 2 MB)</label>
+            {% if not nuovo and p.ha_immagine %}
+                <img class="preview" src="{{ url_for('prodotto_immagine', pid=p.id) }}" alt="Immagine attuale">
+                <label class="check"><input type="checkbox" name="rimuovi_immagine"> Rimuovi l'immagine attuale</label>
+            {% endif %}
+            <input type="file" id="immagine" name="immagine" accept="image/png,image/jpeg,image/gif,image/webp">
+        </div>
+        <div class="row">
+            <button type="submit" class="btn">Salva</button>
+            <a class="btn btn-grey btn-link" href="{{ url_for('dashboard') }}">Annulla</a>
+        </div>
+    </form>
+</main>
+{% endblock %}

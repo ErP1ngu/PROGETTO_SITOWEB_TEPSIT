@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Gestione utenti{% endblock %}
+{% block content %}
+<main class="page">
+    <h1>Gestione utenti</h1>
+    <p class="subtitle left">Cambia il ruolo degli utenti o elimina gli account non più necessari.</p>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Username</th><th>Email</th><th>Stato</th><th>Ruolo</th><th>Azioni</th></tr></thead>
+        <tbody>
+        {% for u in utenti %}
+            <tr>
+                <td><strong>{{ u.username }}</strong></td>
+                <td>{{ u.email }}</td>
+                <td>{{ 'Attivo' if u.attivo else 'Da confermare' }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('utente_ruolo', uid=u.id) }}" class="inline">
+                        <select name="ruolo" onchange="this.form.submit()" aria-label="Ruolo di {{ u.username }}">
+                            <option value="base" {{ 'selected' if u.ruolo == 'base' }}>Base</option>
+                            <option value="gestore" {{ 'selected' if u.ruolo == 'gestore' }}>Gestore</option>
+                        </select>
+                    </form>
+                </td>
+                <td class="actions">
+                    <form method="POST" action="{{ url_for('utente_elimina', uid=u.id) }}" class="inline"
+                          onsubmit="return confirm('Eliminare l\'utente {{ u.username }}?');">
+                        <button type="submit" class="btn btn-small btn-logout">Elimina</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<main class="page">
+    <h1>Dashboard</h1>
+    <p class="subtitle left">Benvenuto, <strong>{{ username }}</strong>.
+        {% if is_gestore %}Come gestore puoi creare, modificare ed eliminare i prodotti.
+        {% else %}Il tuo account può solo consultare i dati.{% endif %}</p>
+
+    <section class="stats">
+        <div class="stat"><span class="stat-num">{{ stats.n_prodotti }}</span> prodotti</div>
+        <div class="stat"><span class="stat-num">{{ stats.n_categorie }}</span> categorie</div>
+        <div class="stat"><span class="stat-num">{{ '%.0f'|format(stats.valore_magazzino) }} €</span> valore di magazzino</div>
+    </section>
+
+    <form class="filters" method="GET" action="{{ url_for('dashboard') }}">
+        <input type="search" name="q" value="{{ filtri.q }}" placeholder="Cerca per nome o descrizione">
+        <select name="categoria" aria-label="Categoria">
+            <option value="">Tutte le categorie</option>
+            {% for c in categorie %}
+            <option value="{{ c.id }}" {{ 'selected' if filtri.categoria == c.id }}>{{ c.nome }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="prezzo_min" value="{{ filtri.prezzo_min }}" placeholder="Prezzo min" inputmode="decimal" size="8">
+        <input type="text" name="prezzo_max" value="{{ filtri.prezzo_max }}" placeholder="Prezzo max" inputmode="decimal" size="8">
+        <select name="ordine" aria-label="Ordinamento">
+            <option value="nome_asc" {{ 'selected' if filtri.ordine == 'nome_asc' }}>Nome A–Z</option>
+            <option value="prezzo_asc" {{ 'selected' if filtri.ordine == 'prezzo_asc' }}>Prezzo crescente</option>
+            <option value="prezzo_desc" {{ 'selected' if filtri.ordine == 'prezzo_desc' }}>Prezzo decrescente</option>
+            <option value="recenti" {{ 'selected' if filtri.ordine == 'recenti' }}>Più recenti</option>
+        </select>
+        <button type="submit" class="btn btn-small">Filtra</button>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-small btn-grey">Azzera</a>
+    </form>
+
+    {% if is_gestore %}
+    <p><a class="btn btn-small btn-green" href="{{ url_for('prodotto_nuovo') }}">+ Nuovo prodotto</a></p>
+    {% endif %}
+
+    {% if prodotti %}
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Immagine</th><th>Nome</th><th>Categoria</th><th>Prezzo</th><th>Disponibili</th>
+            {% if is_gestore %}<th>Azioni</th>{% endif %}</tr>
+        </thead>
+        <tbody>
+        {% for p in prodotti %}
+            <tr>
+                <td>{% if p.ha_immagine %}<img class="thumb" src="{{ url_for('prodotto_immagine', pid=p.id) }}" alt="{{ p.nome }}">
+                    {% else %}<span class="thumb thumb-empty">—</span>{% endif %}</td>
+                <td><strong>{{ p.nome }}</strong><br><span class="muted">{{ p.descrizione }}</span></td>
+                <td>{{ p.categoria or '—' }}</td>
+                <td class="num">{{ '%.2f'|format(p.prezzo) }} €</td>
+                <td class="num">{{ p.quantita }}</td>
+                {% if is_gestore %}
+                <td class="actions">
+                    <a class="btn btn-small" href="{{ url_for('prodotto_modifica', pid=p.id) }}">Modifica</a>
+                    <form method="POST" action="{{ url_for('prodotto_elimina', pid=p.id) }}" class="inline"
+                          onsubmit="return confirm('Eliminare {{ p.nome|replace("'", "") }}?');">
+                        <button type="submit" class="btn btn-small btn-logout">Elimina</button>
+                    </form>
+                </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    {% else %}
+        <p class="empty">Nessun prodotto corrisponde ai filtri. Prova ad azzerarli.</p>
+    {% endif %}
+</main>
+{% endblock %}

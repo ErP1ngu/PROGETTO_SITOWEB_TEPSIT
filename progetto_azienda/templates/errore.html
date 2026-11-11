@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ titolo }}{% endblock %}
+{% block body_class %}auth{% endblock %}
+{% block content %}
+<main class="auth-main">
+    <div class="card">
+        <h2>{{ titolo }}</h2>
+        <p class="subtitle">{{ testo }}</p>
+        <a class="btn btn-link" href="{{ url_for('dashboard') }}">Torna alla dashboard</a>
+    </div>
+</main>
+{% endblock %}

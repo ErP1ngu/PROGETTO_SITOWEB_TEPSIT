@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Nordwave{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    {% block nav %}
+    <header class="topbar">
+        <a class="brand" href="{{ url_for('azienda') }}">Nordwave</a>
+        <nav class="topbar-links">
+            <a href="{{ url_for('azienda') }}">Azienda</a>
+            {% if utente_loggato %}
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                {% if is_gestore %}<a href="{{ url_for('gestione_utenti') }}">Utenti</a>{% endif %}
+                <form action="{{ url_for('logout') }}" method="POST" class="inline">
+                    <button type="submit" class="link-btn">Esci ({{ utente_loggato }})</button>
+                </form>
+            {% else %}
+                <a href="{{ url_for('login') }}">Accedi</a>
+                <a href="{{ url_for('registrazione') }}">Registrati</a>
+            {% endif %}
+        </nav>
+    </header>
+    {% endblock %}
+
+    {% with messaggi = get_flashed_messages(with_categories=true) %}
+        {% if messaggi %}
+        <div class="flash-wrap">
+            {% for categoria, testo in messaggi %}
+                <p class="flash flash-{{ categoria }}">{{ testo }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</body>
+</html>

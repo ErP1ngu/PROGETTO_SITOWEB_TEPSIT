@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block title %}{{ a.nome }} – Chi siamo{% endblock %}
+
+{% block nav %}
+<header class="topbar" id="topbar">
+    <a class="brand" href="#home">Nordwave</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Apri il menu" aria-expanded="false">Menu</button>
+    <nav class="topbar-links" id="menu">
+        <a href="#chi-siamo">Chi siamo</a>
+        <a href="#valori">Valori</a>
+        <a href="#storia">Storia</a>
+        <a href="#numeri">Numeri</a>
+        <a href="#servizi">Servizi</a>
+        <a href="#prodotti">Prodotti</a>
+        <a href="#team">Team</a>
+        <a href="#faq">Domande</a>
+        <a href="#contatti">Contatti</a>
+        <span class="sep"></span>
+        {% if utente_loggato %}
+            <a href="{{ url_for('dashboard') }}" class="cta">Dashboard</a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="cta">Accedi</a>
+        {% endif %}
+    </nav>
+</header>
+{% endblock %}
+
+{% block content %}
+<main class="company">
+
+    <section id="home" class="hero">
+        <h1>{{ a.slogan }}</h1>
+        <p>{{ a.nome }} progetta sensori, gateway e una piattaforma cloud per chi gestisce stabilimenti, magazzini e impianti.</p>
+        <p class="hero-actions">
+            <a class="btn btn-inline" href="#prodotti">Vedi i prodotti</a>
+            <a class="btn btn-inline btn-ghost" href="#contatti">Parla con noi</a>
+        </p>
+    </section>
+
+    <section id="chi-siamo" class="block">
+        <h2>Chi siamo</h2>
+        <div class="two-col">
+            <p>{{ a.nome }} è un'azienda di Milano che unisce elettronica e software. Dal 2012 aiutiamo
+               fabbriche, cantine, magazzini frigoriferi e aziende agricole a tenere sotto controllo
+               temperature, umidità e vibrazioni dei loro macchinari.</p>
+            <p>Progettiamo e produciamo i sensori nel nostro laboratorio, scriviamo il software che
+               raccoglie i dati e seguiamo l'installazione in prima persona. Un solo fornitore
+               significa un solo numero da chiamare quando qualcosa non va.</p>
+        </div>
+    </section>
+
+    <section id="valori" class="block alt">
+        <h2>I nostri valori</h2>
+        <div class="grid-3">
+            {% for titolo, testo in a.valori %}
+            <article class="item">
+                <h3>{{ titolo }}</h3>
+                <p>{{ testo }}</p>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="storia" class="block">
+        <h2>La nostra storia</h2>
+        <ol class="timeline">
+            {% for anno, testo in a.storia %}
+            <li><span class="year">{{ anno }}</span><p>{{ testo }}</p></li>
+            {% endfor %}
+        </ol>
+    </section>
+
+    <section id="numeri" class="block alt">
+        <h2>Nordwave in numeri</h2>
+        <p class="lead">Questi dati arrivano direttamente dal database.</p>
+        <div class="grid-4">
+            <div class="big"><strong>{{ stats.n_prodotti }}</strong>prodotti a catalogo</div>
+            <div class="big"><strong>{{ stats.n_categorie }}</strong>linee di prodotto</div>
+            <div class="big"><strong>{{ stats.n_utenti }}</strong>utenti registrati</div>
+            <div class="big"><strong>{{ '{:,.0f}'.format(stats.valore_magazzino).replace(',', '.') }} €</strong>valore a magazzino</div>
+        </div>
+    </section>
+
+    <section id="servizi" class="block">
+        <h2>Cosa facciamo</h2>
+        <div class="grid-2">
+            {% for titolo, testo in a.servizi %}
+            <article class="item">
+                <h3>{{ titolo }}</h3>
+                <p>{{ testo }}</p>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="prodotti" class="block alt">
+        <h2>Prodotti in evidenza</h2>
+        <div class="grid-3">
+            {% for p in evidenza %}
+            <article class="item product">
+                {% if p.ha_immagine %}
+                    <img src="{{ url_for('prodotto_immagine', pid=p.id) }}" alt="{{ p.nome }}">
+                {% endif %}
+                <h3>{{ p.nome }}</h3>
+                <p class="muted">{{ p.categoria or 'Senza categoria' }}</p>
+                <p>{{ p.descrizione }}</p>
+                <p class="price">{{ '%.2f'|format(p.prezzo) }} €</p>
+            </article>
+            {% endfor %}
+        </div>
+        <p><a href="{{ url_for('dashboard') }}">Vai al catalogo completo nella dashboard</a></p>
+    </section>
+
+    <section id="team" class="block">
+        <h2>Il team</h2>
+        <div class="grid-2">
+            {% for d in team %}
+            <article class="item">
+                <h3>{{ d.nome }}</h3>
+                <p class="muted">{{ d.ruolo }}</p>
+                <p>{{ d.bio }}</p>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="faq" class="block alt">
+        <h2>Domande frequenti</h2>
+        <div class="faq">
+            {% for domanda, risposta in a.faq %}
+            <details>
+                <summary>{{ domanda }}</summary>
+                <p>{{ risposta }}</p>
+            </details>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="contatti" class="block">
+        <h2>Contatti</h2>
+        <dl class="contacts">
+            <dt>Sede</dt><dd>{{ a.indirizzo }}</dd>
+            <dt>Telefono</dt><dd>{{ a.telefono }}</dd>
+            <dt>Email</dt><dd>{{ a.email }}</dd>
+            <dt>Orari</dt><dd>{{ a.orari }}</dd>
+        </dl>
+    </section>
+
+    <footer class="footer">© {{ a.nome }} – Progetto scolastico</footer>
+</main>
+
+<script>
+    // Menu mobile
+    const toggle = document.getElementById('menuToggle');
+    const menu = document.getElementById('menu');
+    toggle.addEventListener('click', () => {
+        const aperto = menu.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', aperto);
+    });
+    menu.addEventListener('click', e => {
+        if (e.target.tagName === 'A') { menu.classList.remove('open'); toggle.setAttribute('aria-expanded', false); }
+    });
+
+    // Evidenzia nella navbar la sezione che stai leggendo
+    const links = [...document.querySelectorAll('#menu a[href^="#"]')];
+    const sezioni = links.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    const osserva = new IntersectionObserver(voci => {
+        voci.forEach(v => {
+            if (v.isIntersecting) {
+                links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + v.target.id));
+            }
+        });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sezioni.forEach(s => osserva.observe(s));
+</script>
+{% endblock %}
