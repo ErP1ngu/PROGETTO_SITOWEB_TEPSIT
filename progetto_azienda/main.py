@@ -23,36 +23,11 @@ MAX_IMMAGINE = 2 * 1024 * 1024  # 2 MB
 
 # Dati fissi della pagina "Azienda" (testi, non dati gestiti dal database)
 AZIENDA = {
-    "nome": "Nordwave S.r.l.",
-    "slogan": "Sensori e software per impianti che si controllano da soli.",
-    "indirizzo": "Via dell'Industria 24, 20100 Milano",
-    "telefono": "+39 02 1234 5678",
-    "email": "info@nordwave.example",
-    "orari": "Lun–Ven 8:30–18:00",
-    "valori": [
-        ("Misure affidabili", "Ogni sensore è tarato in laboratorio e viene consegnato con il suo certificato."),
-        ("Dati sotto controllo", "I dati dei clienti restano in Europa e viaggiano sempre cifrati."),
-        ("Assistenza vera", "Chi risponde al telefono conosce l'impianto e può intervenire subito."),
-    ],
-    "storia": [
-        ("2012", "Nasce Nordwave in un garage di Monza, con due persone e un solo sensore di temperatura."),
-        ("2015", "Primo gateway LoRa: i sensori comunicano senza cablaggi fino a 2 km."),
-        ("2018", "Apre la sede di Milano con laboratorio di taratura e 15 dipendenti."),
-        ("2021", "Esce la piattaforma cloud: allarmi, report e accesso via API."),
-        ("2024", "Oltre 400 impianti monitorati in Italia, Francia e Germania."),
-    ],
-    "servizi": [
-        ("Progettazione impianti", "Studiamo il tuo stabilimento e scegliamo dove posizionare i sensori."),
-        ("Installazione e collaudo", "Un nostro tecnico installa, collega e verifica ogni punto di misura."),
-        ("Monitoraggio cloud", "Controlli temperature, umidità e vibrazioni da browser o da telefono."),
-        ("Manutenzione predittiva", "Ti avvisiamo prima che un motore si fermi, non dopo."),
-    ],
-    "faq": [
-        ("Posso provare il sistema prima di acquistarlo?", "Sì: per 30 giorni puoi testare un kit con tre sensori e un gateway senza impegno."),
-        ("Quanto dura la batteria dei sensori?", "Fino a 5 anni con una misura ogni 10 minuti."),
-        ("I dati si possono esportare?", "Con il piano Plus puoi scaricare report PDF e collegarti alle API."),
-        ("Come funziona l'assistenza?", "Rispondiamo entro 2 ore lavorative; con il contratto 24/7 anche di notte e nei festivi."),
-    ],
+    "nome": "AZIENDA",
+    "indirizzo": "Via Esempio 1, Città",
+    "telefono": "000 0000000",
+    "email": "info@azienda.example",
+    "orari": "Lun–Ven 9:00–18:00",
 }
 
 
@@ -66,7 +41,7 @@ def invia_email(destinatario, oggetto, corpo):
         return False
     msg = EmailMessage()
     msg["Subject"] = oggetto
-    msg["From"] = os.getenv("MAIL_FROM", os.getenv("MAIL_USER", "noreply@nordwave.example"))
+    msg["From"] = os.getenv("MAIL_FROM", os.getenv("MAIL_USER", "noreply@azienda.example"))
     msg["To"] = destinatario
     msg.set_content(corpo)
     with smtplib.SMTP(host, int(os.getenv("MAIL_PORT", "587"))) as smtp:
@@ -189,7 +164,7 @@ def registrazione():
         token = serializer.dumps(email, salt="conferma-email")
         link = url_for("conferma_email", token=token, _external=True)
         invia_email(
-            email, "Conferma il tuo account Nordwave",
+            email, "Conferma il tuo account AZIENDA",
             f"Ciao {username},\n\nper attivare l'account apri questo link "
             f"(valido 24 ore):\n{link}\n\nSe non hai richiesto la registrazione ignora questa mail.",
         )

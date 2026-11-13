@@ -17,7 +17,7 @@ DB_CONFIG = {
     "host": os.getenv("DB_HOST", "10.10.0.10"),
     "port": int(os.getenv("DB_PORT", "3306")),
     "user": os.getenv("DB_USER", "ligabue.ruben"),
-    "password": os.getenv("DB_PASSWORD"),
+    "password": os.getenv("DB_PASSWORD", "11062008"),
     "database": os.getenv("DB_NAME", "rligabue"),
     "charset": "utf8mb4",
     "cursorclass": DictCursor,
@@ -65,6 +65,34 @@ def _execute(sql, params=()):
 
 
 # ---------------------------------------------------------------- utenti
+TABELLE = ("utenti", "categorie", "prodotti", "dipendenti")
+
+
+def inizializza_database():
+    """Se nel database mancano le tabelle le crea e inserisce i dati di esempio
+    eseguendo database.sql. Se le tabelle ci sono già non tocca nulla."""
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            segnaposti = ", ".join(["%s"] * len(TABELLE))
+            cur.execute(
+                "SELECT COUNT(*) AS n FROM information_schema.tables "
+                f"WHERE table_schema = DATABASE() AND table_name IN ({segnaposti})",
+                TABELLE,
+            )
+            if cur.fetchone()["n"] == len(TABELLE):
+                return False
+            percorso = os.path.join(os.path.dirname(os.path.abspath(__file__)), "database.sql")
+            with open(percorso, encoding="utf-8") as f:
+                righe = [r for r in f if not r.strip().startswith("--")]
+            for istruzione in "".join(righe).split(";"):
+                if istruzione.strip():
+                    cur.execute(istruzione)
+            print("Database inizializzato: tabelle create e dati di esempio inseriti.")
+            return True
+    finally:
+        conn.close()
+
 def crea_utente(username, email, password_hash, ruolo="base", attivo=0):
     return _execute(
         "INSERT INTO utenti (username, email, password_hash, ruolo, attivo) "

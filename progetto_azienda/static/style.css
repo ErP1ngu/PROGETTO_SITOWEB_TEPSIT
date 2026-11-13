@@ -3,7 +3,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 html { scroll-behavior: smooth; scroll-padding-top: 70px; }
 body { background-color: #f4f6f8; color: #333; line-height: 1.55; }
-a { color: #007bff; }
+a { color: #555555; }
 .muted { color: #777; font-size: .9rem; }
 .small { font-size: .9rem; }
 .inline { display: inline; }
@@ -12,17 +12,17 @@ a { color: #007bff; }
 .topbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center;
     justify-content: space-between; gap: 1rem; flex-wrap: wrap;
     background: #ffffff; padding: .8rem 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
-.brand { font-weight: 700; font-size: 1.2rem; color: #0056b3; text-decoration: none; }
+.brand { font-weight: 700; font-size: 1.2rem; color: #2e2e2e; text-decoration: none; }
 .topbar-links { display: flex; align-items: center; gap: .3rem; flex-wrap: wrap; }
 .topbar-links a, .link-btn { color: #444; text-decoration: none; padding: .4rem .7rem;
     border-radius: 5px; font-size: .95rem; }
-.topbar-links a:hover, .link-btn:hover { background: #eef3fa; }
-.topbar-links a.active { background: #e1ecfb; color: #0056b3; font-weight: 600; }
-.topbar-links a.cta { background: #007bff; color: #fff; }
-.topbar-links a.cta:hover { background: #0056b3; }
+.topbar-links a:hover, .link-btn:hover { background: #ececec; }
+.topbar-links a.active { background: #e2e2e2; color: #2e2e2e; font-weight: 600; }
+.topbar-links a.cta { background: #555555; color: #fff; }
+.topbar-links a.cta:hover { background: #2e2e2e; }
 .link-btn { background: none; border: none; cursor: pointer; }
 .sep { width: 1px; height: 1.4rem; background: #ddd; margin: 0 .4rem; }
-.menu-toggle { display: none; background: #eef3fa; border: none; border-radius: 5px;
+.menu-toggle { display: none; background: #ececec; border: none; border-radius: 5px;
     padding: .45rem .9rem; cursor: pointer; font-size: .95rem; }
 
 /* ---------- card login / registrazione ---------- */
@@ -43,15 +43,15 @@ input, select, textarea { font-size: 1rem; }
     width: 100%; padding: .75rem; border: 1px solid #ccc; border-radius: 5px;
     transition: border-color .2s; background: #fff; }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus,
-.filters input:focus, .filters select:focus { outline: 2px solid #9ec5fe; border-color: #007bff; }
+.filters input:focus, .filters select:focus { outline: 2px solid #bbbbbb; border-color: #555555; }
 .check { display: flex !important; align-items: center; gap: .5rem; margin: .5rem 0; }
 .row { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
 
 /* ---------- bottoni ---------- */
-.btn { display: inline-block; width: 100%; padding: .75rem; background-color: #007bff; border: none;
+.btn { display: inline-block; width: 100%; padding: .75rem; background-color: #555555; border: none;
     border-radius: 5px; color: #fff; font-size: 1rem; cursor: pointer; font-weight: bold;
     text-align: center; text-decoration: none; transition: background-color .2s; }
-.btn:hover { background-color: #0056b3; }
+.btn:hover { background-color: #2e2e2e; }
 .btn-small { width: auto; padding: .45rem .9rem; font-size: .9rem; }
 .btn-inline { width: auto; padding: .75rem 1.4rem; }
 .btn-link { width: auto; padding: .75rem 1.4rem; }
@@ -59,8 +59,8 @@ input, select, textarea { font-size: 1rem; }
 .btn-logout:hover { background-color: #bd2130; }
 .btn-green { background: #198754; } .btn-green:hover { background: #146c43; }
 .btn-grey { background: #6c757d; } .btn-grey:hover { background: #565e64; }
-.btn-ghost { background: transparent; color: #fff; border: 2px solid #fff; padding: calc(.75rem - 2px) calc(1.4rem - 2px); }
-.btn-ghost:hover { background: rgba(255,255,255,.15); }
+.btn-ghost { background: transparent; color: #333; border: 2px solid #333; padding: calc(.75rem - 2px) calc(1.4rem - 2px); }
+.btn-ghost:hover { background: rgba(0,0,0,.08); }
 
 /* ---------- messaggi ---------- */
 .error { background: #f8d7da; color: #721c24; padding: .75rem; border-radius: 5px;
@@ -78,14 +78,14 @@ input, select, textarea { font-size: 1rem; }
 .panel { background: #fff; padding: 1.8rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,.08); margin-top: 1.2rem; }
 .stats { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.2rem 0; }
 .stat { background: #fff; padding: .9rem 1.2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.06); color: #666; }
-.stat-num { font-size: 1.4rem; font-weight: 700; color: #0056b3; margin-right: .3rem; }
+.stat-num { font-size: 1.4rem; font-weight: 700; color: #2e2e2e; margin-right: .3rem; }
 .filters { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; }
 .filters input, .filters select { padding: .55rem .7rem; border: 1px solid #ccc; border-radius: 5px; background: #fff; }
 .filters input[type=search] { flex: 1; min-width: 200px; }
 .table-wrap { overflow-x: auto; background: #fff; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,.08); margin-top: 1rem; }
 table { width: 100%; border-collapse: collapse; }
 th, td { padding: .75rem 1rem; text-align: left; border-bottom: 1px solid #eee; vertical-align: middle; }
-th { background: #f7f9fb; font-size: .9rem; color: #555; }
+th { background: #f5f5f5; font-size: .9rem; color: #555; }
 td.num { text-align: right; white-space: nowrap; }
 td.actions { white-space: nowrap; }
 .thumb { width: 56px; height: 56px; object-fit: cover; border-radius: 6px; display: block; }
@@ -95,11 +95,11 @@ td.actions { white-space: nowrap; }
 
 /* ---------- pagina Azienda ---------- */
 .company { overflow-x: hidden; }
-.hero { background: linear-gradient(135deg, #0b3d7a, #007bff); color: #fff; padding: 6rem 1.5rem; text-align: center; }
-.hero h1 { max-width: 780px; margin: 0 auto 1rem; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.2; }
-.hero p { max-width: 620px; margin: 0 auto 1.5rem; font-size: 1.1rem; opacity: .95; }
+.hero { background: #d9d9d9; color: #222; padding: 3.5rem 1.5rem; text-align: center; }
+.hero h1 { margin: 0 auto .5rem; font-size: 2.2rem; letter-spacing: 2px; }
+.hero p { margin: 0 auto; font-size: 1rem; }
 .hero-actions { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
-.block { padding: 4.5rem 1.5rem; max-width: 1000px; margin: 0 auto; }
+.block { padding: 3rem 1.5rem; max-width: 1000px; margin: 0 auto; }
 .block.alt { max-width: none; background: #fff; }
 .block.alt > * { max-width: 1000px; margin-left: auto; margin-right: auto; }
 .block h2 { font-size: 1.8rem; margin-bottom: 1.5rem; color: #1b2a41; }
@@ -109,18 +109,18 @@ td.actions { white-space: nowrap; }
 .grid-2 { grid-template-columns: repeat(2, 1fr); }
 .grid-3 { grid-template-columns: repeat(3, 1fr); }
 .grid-4 { grid-template-columns: repeat(4, 1fr); }
-.item { background: #f7f9fb; border-radius: 10px; padding: 1.4rem; border-left: 4px solid #007bff; }
+.item { background: #f5f5f5; border-radius: 4px; padding: 1.2rem; border: 1px solid #ddd; }
 .alt .item { background: #f4f6f8; }
 .item h3 { margin-bottom: .4rem; font-size: 1.1rem; }
 .product img { width: 100%; height: 160px; object-fit: cover; border-radius: 6px; margin-bottom: .8rem; }
-.price { font-weight: 700; color: #0056b3; font-size: 1.2rem; margin-top: .6rem; }
-.timeline { list-style: none; border-left: 3px solid #cfe0f7; padding-left: 1.5rem; }
+.price { font-weight: 700; color: #2e2e2e; font-size: 1.2rem; margin-top: .6rem; }
+.timeline { list-style: none; border-left: 3px solid #cccccc; padding-left: 1.5rem; }
 .timeline li { position: relative; margin-bottom: 1.6rem; }
 .timeline li::before { content: ""; position: absolute; left: -1.95rem; top: .45rem; width: 12px; height: 12px;
-    border-radius: 50%; background: #007bff; }
-.year { font-weight: 700; font-size: 1.2rem; color: #0056b3; }
+    border-radius: 50%; background: #555555; }
+.year { font-weight: 700; font-size: 1.2rem; color: #2e2e2e; }
 .big { text-align: center; color: #666; }
-.big strong { display: block; font-size: 2.2rem; color: #0056b3; }
+.big strong { display: block; font-size: 2.2rem; color: #2e2e2e; }
 .faq details { background: #f4f6f8; border-radius: 8px; padding: .9rem 1.2rem; margin-bottom: .6rem; }
 .faq summary { cursor: pointer; font-weight: 600; }
 .faq p { margin-top: .6rem; color: #555; }
@@ -142,3 +142,5 @@ td.actions { white-space: nowrap; }
     .block { padding: 3rem 1.2rem; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+.more { margin-top: 1rem; }

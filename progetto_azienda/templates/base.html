@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Nordwave{% endblock %}</title>
+    <title>{% block title %}AZIENDA{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body class="{% block body_class %}{% endblock %}">
     {% block nav %}
     <header class="topbar">
-        <a class="brand" href="{{ url_for('azienda') }}">Nordwave</a>
+        <a class="brand" href="{{ url_for('azienda') }}">AZIENDA</a>
         <nav class="topbar-links">
             <a href="{{ url_for('azienda') }}">Azienda</a>
             {% if utente_loggato %}
